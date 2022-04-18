@@ -1,6 +1,8 @@
 import Head from "next/head";
 
-export default function Home() {
+import { prisma } from "../db/client";
+
+export default function Home(props: any) {
   return (
     <div>
       <Head>
@@ -13,7 +15,18 @@ export default function Home() {
         <h1 className="text-2xl font-bold">
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+        <code>{props.questions}</code>
       </main>
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const questions = await prisma.pollQuestion.findMany();
+
+  return {
+    props: {
+      questions: JSON.stringify(questions),
+    },
+  };
+};
