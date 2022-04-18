@@ -18,5 +18,5 @@ model PollQuestion {
 
   endsAt DateTime?
 
-  question String
+  question String @db.VarChar(5000)
 }
