@@ -8,7 +8,7 @@ const QuestionCreator: React.FC = () => {
   const { mutate, isLoading } = trpc.useMutation("questions.create", {
     onSuccess: (data) => {
       console.log("did we succeed?", data);
-      client.invalidateQueries(["questions.get-all"]);
+      client.invalidateQueries(["questions.get-all-my-questions"]);
       if (!inputRef.current) return;
       inputRef.current.value = "";
     },
@@ -29,7 +29,7 @@ const QuestionCreator: React.FC = () => {
 };
 
 export default function Home() {
-  const { data, isLoading } = trpc.useQuery(["questions.get-all"]);
+  const { data, isLoading } = trpc.useQuery(["questions.get-all-my-questions"]);
 
   if (isLoading || !data) return <div>Loading...</div>;
 
@@ -39,7 +39,7 @@ export default function Home() {
         <div className="text-2xl font-bold">Questions</div>
         {data.map((question) => {
           return (
-            <Link href={`/question/${question.id}`}>
+            <Link href={`/question/${question.id}`} key={question.id}>
               <a>
                 <div key={question.id} className="my-2">
                   {question.question}
