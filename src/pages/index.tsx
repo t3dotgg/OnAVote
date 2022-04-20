@@ -8,27 +8,31 @@ export default function Home() {
   if (isLoading || !data) return <div>Loading...</div>;
 
   return (
-    <div className="p-6 flex flex-col">
-      <div className="flex flex-col">
+    <div className="p-6 flex flex-col w-screen items-stretch">
+      <div className="header flex w-full justify-between">
         <div className="text-2xl font-bold">Your Questions</div>
+        <Link href="/create">
+          <a className="bg-gray-300 rounded text-gray-800 p-4">
+            Create New Question
+          </a>
+        </Link>
+      </div>
+      <div className="flex flex-col">
         {data.map((question) => {
           return (
-            <div className="flex flex-col my-2" key={question.id}>
-              <Link href={`/question/${question.id}`}>
-                <a>
+            <Link href={`/question/${question.id}`} key={question.id}>
+              <a>
+                <div className="flex flex-col my-2">
                   <div key={question.id} className="">
                     {question.question}
                   </div>
-                </a>
-              </Link>
-              <span>Created on {question.createdAt.toDateString()}</span>
-            </div>
+                  <span>Created on {question.createdAt.toDateString()}</span>
+                </div>
+              </a>
+            </Link>
           );
         })}
       </div>
-      <Link href="/create">
-        <a>Create New Question</a>
-      </Link>
     </div>
   );
 }
