@@ -14,6 +14,8 @@
     "@trpc/next": "^9.22.0",
     "@trpc/react": "^9.22.0",
     "@trpc/server": "^9.22.0",
+    "@types/nanoid": "^3.0.0",
+    "nanoid": "^3.3.3",
     "next": "12.1.5",
     "react": "18.0.0",
     "react-dom": "18.0.0",
