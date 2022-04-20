@@ -2,7 +2,6 @@ import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
-  console.log("Request", req.cookies);
   if (req.cookies["poll-token"]) return;
 
   const random = nanoid();
