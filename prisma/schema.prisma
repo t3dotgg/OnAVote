@@ -24,6 +24,8 @@ model PollQuestion {
 
   options Json
   Vote    Vote[]
+
+  @@index([ownerToken])
 }
 
 model Vote {
