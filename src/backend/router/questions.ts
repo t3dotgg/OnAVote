@@ -41,6 +41,7 @@ export const questionRouter = createRouter()
 
       if (rest.vote || rest.isOwner) {
         const votes = await prisma.vote.groupBy({
+          where: { questionId: input.id },
           by: ["choice"],
           _count: true,
         });
