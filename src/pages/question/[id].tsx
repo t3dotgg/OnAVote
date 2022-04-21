@@ -2,17 +2,12 @@ import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
 
 const QuestionsPageContent: React.FC<{ id: string }> = ({ id }) => {
-  const { data, isLoading, error } = trpc.useQuery([
-    "questions.get-by-id",
-    { id },
-  ]);
+  const { data } = trpc.useQuery(["questions.get-by-id", { id }]);
 
   const { mutate, data: voteResponse } = trpc.useMutation(
     "questions.vote-on-question",
     { onSuccess: () => window.location.reload() }
   );
-
-  console.log("data?", data);
 
   if (!data || !data?.question) {
     return <div>Question not found</div>;
