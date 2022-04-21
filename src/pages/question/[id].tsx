@@ -8,8 +8,11 @@ const QuestionsPageContent: React.FC<{ id: string }> = ({ id }) => {
   ]);
 
   const { mutate, data: voteResponse } = trpc.useMutation(
-    "questions.vote-on-question"
+    "questions.vote-on-question",
+    { onSuccess: () => window.location.reload() }
   );
+
+  console.log("data?", data);
 
   if (!data || !data?.question) {
     return <div>Question not found</div>;
@@ -24,7 +27,11 @@ const QuestionsPageContent: React.FC<{ id: string }> = ({ id }) => {
       <div className="flex flex-col gap-4">
         {(data?.question?.options as string[])?.map((option, index) => {
           if (data?.isOwner || data?.vote) {
-            return <div key={index}>{(option as any).text}</div>;
+            return (
+              <div key={index}>
+                {data?.votes?.[index]?._count} - {(option as any).text}
+              </div>
+            );
           }
 
           return (
