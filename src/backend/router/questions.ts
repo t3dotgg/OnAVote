@@ -62,12 +62,18 @@ export const questionRouter = createRouter()
     }),
     async resolve({ input, ctx }) {
       if (!ctx.token) throw new Error("Unauthroized");
-      return await prisma.vote.create({
+      await prisma.vote.create({
         data: {
           questionId: input.questionId,
           choice: input.option,
           voterToken: ctx.token,
         },
+      });
+
+      return await prisma.vote.groupBy({
+        where: { questionId: input.questionId },
+        by: ["choice"],
+        _count: true,
       });
     },
   })
