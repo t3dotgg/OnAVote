@@ -1,15 +1,39 @@
+import { PollQuestion } from "@prisma/client";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import { trpc } from "../utils/trpc";
 
+const Toast: React.FC = () => (
+  <div className="absolute bottom-5 right-10 flex items-center justify-center bg-slate-50/10 p-3 rounded-md w-1/5">
+    <span className="text-xs font-semibold">Link Copied to Clipboard!</span>
+  </div>
+);
+
 export default function Home() {
+  const [showToast, setShowToast] = React.useState(false);
   const { data, isLoading } = trpc.useQuery(["questions.get-all-my-questions"]);
 
-  if (isLoading || !data) return <div>Loading...</div>;
+  const url = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : `http://localhost:${process.env.PORT ?? 3000}`;
+
+  const copyToClipboard = (question: PollQuestion) => {
+    navigator.clipboard.writeText(`${url}/question/${question.id}`);
+    setShowToast(true);
+
+    setTimeout(() => setShowToast(false), 2000);
+  };
+
+  if (isLoading)
+    return (
+      <div className="antialiased min-h-screen flex items-center justify-center">
+        <p className="text-white/40">Loading...</p>
+      </div>
+    );
 
   return (
-    <div className="p-6 min-h-screen w-screen items-stretch">
+    <div className="p-6 min-h-screen w-screen items-stretch relative">
       <Head>
         <title>Home | OnAVote</title>
       </Head>
@@ -22,7 +46,7 @@ export default function Home() {
         </Link>
       </header>
       <div className="grid grid-cols-1 md:grid-cols-4 md:gap-x-5 mt-10">
-        {data.map((question) => {
+        {data?.map((question) => {
           return (
             <div key={question.id} className="card bg-base-100 shadow-xl">
               <div className="card-body">
@@ -36,7 +60,10 @@ export default function Home() {
                   <Link href={`/question/${question.id}`}>
                     <a className="">View</a>
                   </Link>
-                  <span>
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => copyToClipboard(question)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4"
@@ -58,6 +85,7 @@ export default function Home() {
           );
         })}
       </div>
+      {showToast && <Toast />}
     </div>
   );
 }

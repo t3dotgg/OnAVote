@@ -25,7 +25,7 @@ const QuestionsPageContent: React.FC<{ id: string }> = ({ id }) => {
   }
 
   const getTotalVotes = (votes: any) => {
-    votes.map((choice: { _count: number }) => {
+    votes?.map((choice: { _count: number }) => {
       totalVotes += choice._count;
     });
   };
