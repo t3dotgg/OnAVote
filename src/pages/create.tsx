@@ -10,6 +10,7 @@ import {
 } from "../shared/create-question-validator";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Link from "next/link";
 
 const CreateQuestionForm = () => {
   const router = useRouter();
@@ -45,10 +46,15 @@ const CreateQuestionForm = () => {
     );
 
   return (
-    <div className="antialiased text-gray-100 px-6 min-h-screen">
+    <div className="antialiased text-gray-100 p-6 min-h-screen">
       <Head>
         <title>Create | OnAVote</title>
       </Head>
+      <header className="header flex w-full justify-between">
+        <Link href={"/"}>
+          <h1 className="text-4xl font-bold cursor-pointer">OnAVote</h1>
+        </Link>
+      </header>
       <div className="max-w-xl mx-auto py-12 md:max-w-2xl">
         <h2 className="text-2xl font-bold">Create a new poll</h2>
 
@@ -75,7 +81,7 @@ const CreateQuestionForm = () => {
                 <p className="text-red-400">{errors.question.message}</p>
               )}
             </div>
-            <div className="grid grid-cols-2 w-full gap-x-5 gap-y-3">
+            <div className="grid grid-cols-1 w-full gap-x-5 gap-y-3 md:grid-cols-2">
               {fields.map((field, index) => {
                 return (
                   <div key={field.id}>

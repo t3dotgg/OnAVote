@@ -43,7 +43,7 @@ const QuestionsPageContent: React.FC<{ id: string }> = ({ id }) => {
       <Head>
         <title>Question | OnAVote</title>
       </Head>
-      <header className="flex w-full justify-between mb-10">
+      <header className="flex w-full justify-between mb-10 items-center">
         <Link href={"/"}>
           <h1 className="text-4xl font-bold cursor-pointer">OnAVote</h1>
         </Link>

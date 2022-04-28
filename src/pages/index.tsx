@@ -31,7 +31,7 @@ export default function Home() {
       <Head>
         <title>Home | OnAVote</title>
       </Head>
-      <header className="header flex w-full justify-between">
+      <header className="header flex w-full justify-between items-center">
         <h1 className="text-4xl font-bold">OnAVote</h1>
         <Link href="/create">
           <a className="bg-gray-300 rounded text-gray-800 p-4">
@@ -39,7 +39,7 @@ export default function Home() {
           </a>
         </Link>
       </header>
-      <div className="grid grid-cols-1 md:grid-cols-4 md:gap-x-5 mt-10">
+      <div className="grid grid-cols-1 gap-y-5 md:grid-cols-4 md:gap-x-5 mt-10">
         {data?.map((question) => (
           <QuestionCard
             key={question.id}
