@@ -6,7 +6,8 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
 
   const random = nanoid();
 
-  const res = NextResponse.next();
+  // Redirect (to apply cookie)
+  const res = NextResponse.redirect(req.nextUrl);
 
   res.cookie("poll-token", random, { sameSite: "strict" });
 
