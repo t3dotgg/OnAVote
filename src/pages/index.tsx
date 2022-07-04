@@ -9,8 +9,8 @@ export default function Home() {
   const [showToast, setShowToast] = React.useState(false);
   const { data, isLoading } = trpc.useQuery(["questions.get-all-my-questions"]);
 
-  const url = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+  const url = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
     : `http://localhost:${process.env.PORT ?? 3000}`;
 
   const copyToClipboard = (question: PollQuestion) => {
